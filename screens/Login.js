@@ -2,7 +2,6 @@ import {
     View,
     ImageBackground,
     Image,
-    Text,
 } from 'react-native'
 import {UIButton,TextBox} from '../components'
 import {images,colors} from '../constant'
@@ -22,7 +21,7 @@ function Login(props)
     })
 
     const CheckAcc=()=>{
-        axios.post('http://192.168.1.7:3000/login',acc)
+        axios.post('http://192.168.1.6:3000/login',acc)
         .then(res=>{
             if(res.data==="Success"){
                 navigate('TabBar',{key:acc.Username})

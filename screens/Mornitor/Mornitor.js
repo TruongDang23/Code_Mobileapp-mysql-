@@ -13,7 +13,7 @@ import dataHuman from '../../Main/DataHuman'
 import moment from 'moment'
 
 //**Còn code phần hiển thị thời gian lên line chart**//
-//**Nên xứ lý data vào buổi sáng (wifi mạnh) vì buổi tối (wifi yếu) dễ xảy ra trường hợp đọc sai dữ liệu **//
+
 function Mornitor({navigation,route})
 {   
     const db=database

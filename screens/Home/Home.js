@@ -7,35 +7,34 @@ import {
 import {icons, images} from '../../constant'
 import {
     UIIcon,
-    TextBox,
 } from '../../components'
+import { useState } from 'react'
 import HumanItem from './HumanItem'
-import {ref,onValue} from 'firebase/database'
-import database from '../../firebase'
-import dataHuman from '../../Main/DataHuman'
+import axios from 'axios'
+
 
 function Home({navigation,route})
 {
     let key=route.params.key
-
-    let id=[]
-    let db=database
-    let dbRef=ref(db,'users/'+key+'/theoDoi')
-    onValue(dbRef,(snapshot)=>{
-        snapshot.forEach((childSnapshot)=>{
-            let childData=childSnapshot.val()
-            id.push(childData.id)
-        })
+    
+    const [user,setUser]=useState({
+        Username:key
     })
 
-    let humans=[]
-    id.forEach((eachId)=>{
-        dataHuman.forEach((eachHuman)=>{
-            if(eachId==eachHuman.id)
-                humans.push(eachHuman)
-        })
+    const [data,setDatas]=useState([])
+    
+    axios.post('http://192.168.1.6:3000/tracking',user)
+    .then(res=>{
+        const newData=res.data.map(object=>({
+            name:object.Name,
+            age:object.Age,
+            address:object.Address,
+            id:object.ID_patient,
+        }))
+        setDatas(newData)
     })
-
+    .catch(err=>console.log(err))
+    
     return (
         <View style={{flex:1}}>
             <ImageBackground
@@ -70,7 +69,7 @@ function Home({navigation,route})
                         flex:90,
                     }}>
                         <ScrollView>
-                            {humans.map(eachHuman => <HumanItem 
+                            {data.map(eachHuman => <HumanItem 
                                                         human={eachHuman}
                                                         key={eachHuman.id}
                                                         onPress={()=>{
