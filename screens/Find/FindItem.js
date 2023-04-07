@@ -6,14 +6,31 @@ import {icons} from '../../constant'
 import {
     UIIcon,
 } from '../../components'
-import database from '../../firebase'
-import {push,set,ref} from 'firebase/database'
+import axios from 'axios'
 
 function FindItem(props)
 {
     let {name,age,address,id}=props.human
     let user=props.keyUser
+    var track={
+        Username:user,
+        ID_patient:id,
+    }
 
+    const Add=()=>{
+        axios.post('http://192.168.1.6:3000/addtracking',track)
+        .then(res=>{
+            console.log(res.data)
+            if(res.data.code=="ER_DUP_ENTRY"){
+                alert("Patient exist")
+            }
+            else{
+                alert("Add Successfully")
+            }
+            
+        })
+        .catch(err=>{console.log(err)})
+    }
     return (
         <View>
             <View style={{
@@ -38,10 +55,7 @@ function FindItem(props)
                 }}>
                     <UIIcon 
                     thisIcon={icons.add} 
-                    onPress={()=>{ 
-                        Add(user,id)
-                        alert("SuccessFully") 
-                    }}/>
+                    onPress={()=>{Add()}}/>
                 </View>
             </View>
             <View style={{
@@ -54,12 +68,3 @@ function FindItem(props)
     )
 }
 export default FindItem
-function Add(userID,id)
-{
-    const db=database
-    const postList=ref(db,'users/'+userID+'/theoDoi')
-    const newPost=push(postList)
-    set(newPost,{
-      id:id,
-    })
-}

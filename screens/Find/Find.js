@@ -10,22 +10,30 @@ import {
 } from '../../components'
 import FindItem from './FindItem'
 import { useState } from 'react'
-import DataHuman from '../../Main/DataHuman'
+import axios from 'axios'
 
 function Find({navigation,route})
 {
-    let key=route.params.key
+    let user=route.params.key
 
-    const [humans,setHumans]=useState(DataHuman)
-    const [suitableHumans,setSuitableHumans]=useState([
-        {
-            name:'',
-            age:0,
-            address:'',
-            id:0,
-        }
-    ])
+    const [data,setDatas]=useState([])
     const [text,setText] = useState('')
+
+    var findID={ID:text}
+
+    const Find=()=>{
+        axios.post('http://192.168.1.6:3000/find',findID)
+        .then(res=>{
+            const newData=res.data.map(object=>({
+                name:object.Name,
+                age:object.Age,
+                address:object.Address,
+                id:object.ID_patient,
+            }))
+            setDatas(newData)
+        })
+        .catch(err=>console.log(err))
+    }
     
     return (
         <View style={{flex:1}}>
@@ -54,20 +62,7 @@ function Find({navigation,route})
 
                         <UIIcon 
                         thisIcon={icons.find}
-                        onPress={() => {
-                            if(text=='')
-                                alert('Please type the ID')
-                            else
-                            {
-                                let human=humans.map(eachHuman => {
-                                    if(eachHuman.id==text)
-                                        return{...eachHuman}
-                                    else
-                                        return {eachHuman,id:0}
-                                })
-                                setSuitableHumans(human)
-                            }
-                        }}
+                        onPress={()=>{Find()}}
                         />
                     </View>
 
@@ -76,9 +71,9 @@ function Find({navigation,route})
                     }}>
                         <ScrollView>
                             {
-                                suitableHumans.map(eachSuitable => {
-                                    if (eachSuitable.id != 0)
-                                        return <FindItem human={eachSuitable} key={eachSuitable.id} keyUser={key}/>
+                                data.map(eachHuman => {
+                                    if (eachHuman.id != 0)
+                                        return <FindItem human={eachHuman} key={eachHuman.id} keyUser={user}/>
                                 })
                             }
                         </ScrollView>
