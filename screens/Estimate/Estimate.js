@@ -6,57 +6,30 @@ import {
 } from 'react-native'
 import {icons, images} from '../../constant'
 import {UIIcon} from '../../components'
-import { useState,useEffect } from 'react'
+import { useState} from 'react'
 import EstimateItem from './EstimateItem'
-import {ref,onValue} from 'firebase/database'
-import database from '../../firebase'
-import moment from 'moment'
-import dataHuman from '../../Main/DataHuman'
+import axios from 'axios'
 
 function Estimate({navigation,route})
 {
     let name=route.params.name
     let id=route.params.id
-    let directHuman
-    let db=database
-    let date
+    let patient={ID:id}
 
-    const[data,setDatas]=useState([
-        {
-            time:"7h50",
-            avg:24,
-            timMach:7,
-            dotQuy:9,
-            nhoiMau:14,
-        },
-    ])
+    const [data,setDatas]=useState([])
 
-    dataHuman.map(eachHuman=>{
-        if(eachHuman.id==id)
-            directHuman=eachHuman
+    axios.post('http://192.168.1.6:3000/estimate',patient)
+    .then(res=>{
+        const newData=res.data.map(object=>({
+            time:object.Time,
+            avg:object.AVG,
+            timMach:object.TimMach,
+            dotQuy:object.DotQuy,
+            nhoiMau:object.NhoiMau
+        }))
+        setDatas(newData)
     })
-    
-    useEffect(()=>{
-        let dbRef=ref(db,'patient/'+id.toString()+'/estimate')
-        onValue(dbRef,(snapshot)=>{
-            date=moment().format("DD/MM/YYYY HH:mm")
-            let data=snapshot.val()  
-            directHuman.estimate.push({time:date,
-                avg:data.avg,
-                timMach:data.timMach,
-                dotQuy:data.dotQuy,
-                nhoiMau:data.nhoiMau
-            })
-            setDatas([{
-                time:date,
-                avg:data.avg,
-                timMach:data.timMach,
-                dotQuy:data.dotQuy,
-                nhoiMau:data.nhoiMau
-            }]) 
-        })
-    },[])
-
+    .catch(err=>console.log(err))
 
     return (
         <View style={{ flex: 1 }}>
@@ -100,7 +73,7 @@ function Estimate({navigation,route})
                     flex: 90,
                 }}>
                     <ScrollView>
-                        {directHuman.estimate.map(eachEstimate => <EstimateItem estimate={eachEstimate} key={eachEstimate.time}/>)}
+                        {data.map(eachEstimate => <EstimateItem estimate={eachEstimate} key={eachEstimate.time}/>)}
                     </ScrollView>
                 </View>
             </ImageBackground>

@@ -2,9 +2,12 @@ import {
     View,
     Text,
 } from 'react-native'
+import moment from 'moment/moment'
 function EstimateItem(props)
 {
     let {time,avg,timMach,dotQuy,nhoiMau}=props.estimate
+    var realTime = moment (time).format ("HH:mm a")
+    var realDate=moment(time).format("DD/MM/YYYY")
     
     return(
         <View>
@@ -22,7 +25,12 @@ function EstimateItem(props)
                         fontSize: 15,
                         fontWeight: 'bold',
                         alignItems: 'center',
-                    }}>{time}</Text>
+                    }}>{realTime}</Text>
+                    <Text style={{
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                        alignItems: 'center',
+                    }}>{realDate}</Text>
                 </View>
 
                 <View style={{

@@ -16,11 +16,8 @@ import axios from 'axios'
 function Home({navigation,route})
 {
     let key=route.params.key
+    let user={Username:key}
     
-    const [user,setUser]=useState({
-        Username:key
-    })
-
     const [data,setDatas]=useState([])
     
     axios.post('http://192.168.1.6:3000/tracking',user)
