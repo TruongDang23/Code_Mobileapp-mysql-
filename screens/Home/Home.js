@@ -20,7 +20,7 @@ function Home({navigation,route})
     
     const [data,setDatas]=useState([])
     
-    axios.post('http://192.168.1.6:3000/tracking',user)
+    axios.post('http://192.168.1.10:3000/tracking',user)
     .then(res=>{
         const newData=res.data.map(object=>({
             name:object.Name,

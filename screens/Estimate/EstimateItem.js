@@ -7,7 +7,7 @@ function EstimateItem(props)
 {
     let {time,avg,timMach,dotQuy,nhoiMau}=props.estimate
     var realTime = moment (time).format ("HH:mm a")
-    var realDate=moment(time).format("DD/MM/YYYY")
+    var realDate= moment (time).format("DD/MM/YYYY")
     
     return(
         <View>

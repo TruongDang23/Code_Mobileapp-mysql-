@@ -6,51 +6,47 @@ import {
 import {icons, images} from '../../constant'
 import {UIIcon} from '../../components'
 import Chart from './Chart'
-import {useState,useEffect} from 'react'
-import {ref,onValue} from 'firebase/database'
-import database from '../../firebase'
-import dataHuman from '../../Main/DataHuman'
+import {useState} from 'react'
 import moment from 'moment'
+import axios from 'axios'
 
-//**Còn code phần hiển thị thời gian lên line chart**//
 
 function Mornitor({navigation,route})
 {   
-    const db=database
     let id=route.params.id
+    const user={ID:id}
     let name=route.params.name
-    let directHuman
     var date=moment().format('DD/MM/YYYY')
-    const[dataset,setDatas]=useState({
-        heartRate:60,
-        oxi:90,
-        grip:1,
+
+    const [data,setData]=useState({
+        time:[],
+        heart:[],
+        oxi:[],
+        grip:[],
     })
+
+    const [value,setValues]=useState([])
     
-    dataHuman.map(eachHuman=>{
-        if(eachHuman.id==id)
-        {
-            directHuman=eachHuman
-            if(directHuman.GetLength()>10)
-                directHuman.Refresh()
-        }
+    axios.post('http://192.168.1.10:3000/mornitor',user)
+    .then(res=>{
+        const newData=res.data.map(object=>({
+            time:object.Time,
+            heart:object.HeartRate,
+            oxi:object.Oxi,
+            grip:object.GripStrength,
+        }))
+        
+        setValues(newData)
     })
+    .catch(err=>console.log(err))
 
-    useEffect(()=>{
-        let dbRef=ref(db,'patient/'+id.toString()+'/mornitor')
-        onValue(dbRef,(snapshot)=>{
-            let data=snapshot.val()
-            directHuman.data.grip.push(data.grip)
-            directHuman.data.heartRate.push(data.heartRate)
-            directHuman.data.oxi.push(data.oxi)
-            setDatas({
-                heartRate:data.heartRate,
-                oxi:data.oxi,
-                grip:data.grip,
-            })
-        })
-    },[])
-
+    for(let i=0;i<value.length && data.time.length<value.length;i++){
+        data.time.push(value[i].time)
+        data.heart.push(value[i].heart)
+        data.oxi.push(value[i].oxi)
+        data.grip.push(value[i].grip)
+    }
+    
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground
@@ -102,7 +98,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:26}}>
-                        <Chart data={directHuman.data.heartRate}/>
+                        <Chart data={data.heart} label={data.time}/>
                     </View>
                 </View>
 
@@ -118,7 +114,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:26}}>
-                        <Chart data={directHuman.data.oxi}/>
+                        <Chart data={data.oxi} label={data.time}/>
                     </View>
                 </View>
 
@@ -134,7 +130,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:30}}>
-                        <Chart data={directHuman.data.grip}/>
+                        <Chart data={data.grip} label={data.time}/>
                     </View>
                 </View>
             </ImageBackground>

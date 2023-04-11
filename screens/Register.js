@@ -23,7 +23,7 @@ function Register(props)
 
     const Handle=()=>{
         //change ip when you use strange wifi
-        axios.post('http://192.168.1.7:3000/create',values)
+        axios.post('http://192.168.1.10:3000/create',values)
         .then(res=>console.log(res))
         .catch(err=>console.log(err))
     }
