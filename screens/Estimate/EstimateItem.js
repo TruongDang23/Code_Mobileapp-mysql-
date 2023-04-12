@@ -17,7 +17,8 @@ function EstimateItem(props)
                 flexDirection: 'row',
             }}>
                 <View style={{
-                    marginRight: 5,
+                    marginRight: 35,
+                    marginLeft:25,
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>

@@ -10,43 +10,44 @@ import {useState} from 'react'
 import moment from 'moment'
 import axios from 'axios'
 
-
 function Mornitor({navigation,route})
 {   
     let id=route.params.id
-    const user={ID:id}
+    let patient={ID:id}
     let name=route.params.name
     var date=moment().format('DD/MM/YYYY')
 
-    const [data,setData]=useState({
-        time:[],
-        heart:[],
-        oxi:[],
-        grip:[],
-    })
+    let T=[] //time
+    let H=[] //heart rate
+    let O=[] //oxigen
+    let G=[] //grip strength
 
     const [value,setValues]=useState([])
-    
-    axios.post('http://192.168.1.10:3000/mornitor',user)
+
+    axios.post('http://192.168.1.10:3000/mornitor',patient)
     .then(res=>{
         const newData=res.data.map(object=>({
-            time:object.Time,
-            heart:object.HeartRate,
-            oxi:object.Oxi,
-            grip:object.GripStrength,
+           time:object.Time,
+           heart:object.HeartRate,
+           oxi:object.Oxi,
+           grip:object.GripStrength,
         }))
-        
         setValues(newData)
+
     })
     .catch(err=>console.log(err))
 
-    for(let i=0;i<value.length && data.time.length<value.length;i++){
-        data.time.push(value[i].time)
-        data.heart.push(value[i].heart)
-        data.oxi.push(value[i].oxi)
-        data.grip.push(value[i].grip)
+    if(T.length<value.length)
+    {
+        for(let i=0;i<value.length;i++)
+        {
+            T.push(value[i].time)
+            H.push(value[i].heart)
+            O.push(value[i].oxi)
+            G.push(value[i].grip)
+        }
     }
-    
+
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground
@@ -98,7 +99,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:26}}>
-                        <Chart data={data.heart} label={data.time}/>
+                        <Chart data={H} label={T}/>
                     </View>
                 </View>
 
@@ -114,7 +115,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:26}}>
-                        <Chart data={data.oxi} label={data.time}/>
+                        <Chart data={O} label={T}/>
                     </View>
                 </View>
 
@@ -130,7 +131,7 @@ function Mornitor({navigation,route})
                         <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                     </View>
                     <View style={{flex:30}}>
-                        <Chart data={data.grip} label={data.time}/>
+                        <Chart data={G} label={T}/>
                     </View>
                 </View>
             </ImageBackground>
