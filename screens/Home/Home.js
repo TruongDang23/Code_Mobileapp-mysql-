@@ -16,11 +16,11 @@ import axios from 'axios'
 function Home({navigation,route})
 {
     let key=route.params.key
-    let user={Username:key}
+    let user={ID:key}
     
     const [data,setDatas]=useState([])
     
-    axios.post('http://192.168.1.10:3000/tracking',user)
+    axios.post('http://192.168.1.5:3000/tracking',user)
     .then(res=>{
         const newData=res.data.map(object=>({
             name:object.Name,

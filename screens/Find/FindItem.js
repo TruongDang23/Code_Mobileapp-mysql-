@@ -13,12 +13,12 @@ function FindItem(props)
     let {name,age,address,id}=props.human
     let user=props.keyUser
     var track={
-        Username:user,
+        ID:user,
         ID_patient:id,
     }
 
     const Add=()=>{
-        axios.post('http://192.168.1.6:3000/addtracking',track)
+        axios.post('http://192.168.1.5:3000/addtracking',track)
         .then(res=>{
             console.log(res.data)
             if(res.data.code=="ER_DUP_ENTRY"){

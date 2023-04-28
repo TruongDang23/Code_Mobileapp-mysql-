@@ -24,7 +24,7 @@ function Mornitor({navigation,route})
 
     const [value,setValues]=useState([])
 
-    axios.post('http://192.168.1.10:3000/mornitor',patient)
+    axios.post('http://192.168.1.5:3000/mornitor',patient)
     .then(res=>{
         const newData=res.data.map(object=>({
            time:object.Time,

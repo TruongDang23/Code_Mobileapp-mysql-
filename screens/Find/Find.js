@@ -22,7 +22,7 @@ function Find({navigation,route})
     var findID={ID:text}
 
     const Find=()=>{
-        axios.post('http://192.168.1.10:3000/find',findID)
+        axios.post('http://192.168.1.5:3000/find',findID)
         .then(res=>{
             const newData=res.data.map(object=>({
                 name:object.Name,

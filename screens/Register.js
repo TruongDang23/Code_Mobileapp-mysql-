@@ -23,8 +23,16 @@ function Register(props)
 
     const Handle=()=>{
         //change ip when you use strange wifi
-        axios.post('http://192.168.1.10:3000/create',values)
-        .then(res=>console.log(res))
+        axios.post('http://192.168.1.5:3000/create',values)
+        .then(res=>{
+            if(res.data=="Error"){
+                alert("Error")
+            }
+            else{
+                alert("Create Successfully")
+                navigate('Welcome')
+            }
+        })
         .catch(err=>console.log(err))
     }
 
@@ -92,8 +100,6 @@ function Register(props)
                     <UIButton
                         onPress={()=>{
                             Handle()
-                            alert("Create Successfully")
-                            navigate('Welcome')
                         }}
                         title='CREATE NEW'
                         letterColor={colors.main}

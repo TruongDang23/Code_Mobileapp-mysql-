@@ -21,13 +21,13 @@ function Login(props)
     })
 
     const CheckAcc=()=>{
-        axios.post('http://192.168.1.10:3000/login',acc)
+        axios.post('http://192.168.1.5:3000/login',acc)
         .then(res=>{
-            if(res.data==="Success"){
-                navigate('TabBar',{key:acc.Username})
+            if(res.data==="Fail"){
+                alert("User not available!")
             }
             else{
-                alert("User not available!")
+                navigate('TabBar',{key:res.data[0].ID})
             }
         })
         .catch(err=>console.log(err))
