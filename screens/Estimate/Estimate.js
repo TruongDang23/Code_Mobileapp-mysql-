@@ -4,7 +4,7 @@ import {
     ImageBackground,
     ScrollView,
 } from 'react-native'
-import {icons, images} from '../../constant'
+import {icons, images,routes} from '../../constant'
 import {UIIcon} from '../../components'
 import { useState} from 'react'
 import EstimateItem from './EstimateItem'
@@ -18,7 +18,7 @@ function Estimate({navigation,route})
 
     const [data,setDatas]=useState([])
 
-    axios.post('http://192.168.1.5:3000/estimate',patient)
+    axios.post(routes.estimate,patient)
     .then(res=>{
         const newData=res.data.map(object=>({
             time:object.Time,

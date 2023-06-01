@@ -5,7 +5,7 @@ import {
     Text,
 } from 'react-native'
 import {UIButton,TextBox} from '../components'
-import {images,colors} from '../constant'
+import {images,colors,routes} from '../constant'
 import {useState} from 'react'
 import axios from 'axios'
 function Register(props)
@@ -23,7 +23,7 @@ function Register(props)
 
     const Handle=()=>{
         //change ip when you use strange wifi
-        axios.post('http://192.168.1.5:3000/create',values)
+        axios.post(routes.register,values)
         .then(res=>{
             if(res.data=="Error"){
                 alert("Error")

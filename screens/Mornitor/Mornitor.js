@@ -3,7 +3,7 @@ import {
     Text,
     ImageBackground,
 } from 'react-native'
-import {icons, images} from '../../constant'
+import {icons, images,routes} from '../../constant'
 import {UIIcon} from '../../components'
 import Chart from './Chart'
 import {useState} from 'react'
@@ -24,7 +24,7 @@ function Mornitor({navigation,route})
 
     const [value,setValues]=useState([])
 
-    axios.post('http://192.168.1.5:3000/mornitor',patient)
+    axios.post(routes.mornitor,patient)
     .then(res=>{
         const newData=res.data.map(object=>({
            time:object.Time,

@@ -4,7 +4,7 @@ import {
     ScrollView,
     Text,
 } from 'react-native'
-import {icons, images} from '../../constant'
+import {icons, images,routes} from '../../constant'
 import {
     UIIcon,
 } from '../../components'
@@ -20,7 +20,7 @@ function Home({navigation,route})
     
     const [data,setDatas]=useState([])
     
-    axios.post('http://192.168.1.5:3000/tracking',user)
+    axios.post(routes.tracking,user)
     .then(res=>{
         const newData=res.data.map(object=>({
             name:object.Name,

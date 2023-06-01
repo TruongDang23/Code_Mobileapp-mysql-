@@ -3,7 +3,7 @@ import {
     ImageBackground,
     ScrollView,
 } from 'react-native'
-import {icons, images} from '../../constant'
+import {icons, images,routes} from '../../constant'
 import {
     UIIcon,
     TextBox,
@@ -22,7 +22,7 @@ function Find({navigation,route})
     var findID={ID:text}
 
     const Find=()=>{
-        axios.post('http://192.168.1.5:3000/find',findID)
+        axios.post(routes.find,findID)
         .then(res=>{
             const newData=res.data.map(object=>({
                 name:object.Name,

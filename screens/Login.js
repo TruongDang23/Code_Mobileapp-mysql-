@@ -4,7 +4,7 @@ import {
     Image,
 } from 'react-native'
 import {UIButton,TextBox} from '../components'
-import {images,colors} from '../constant'
+import {images,colors,routes} from '../constant'
 import {useState} from 'react'
 import axios from 'axios'
 
@@ -21,7 +21,7 @@ function Login(props)
     })
 
     const CheckAcc=()=>{
-        axios.post('http://192.168.1.5:3000/login',acc)
+        axios.post(routes.login,acc)
         .then(res=>{
             if(res.data==="Fail"){
                 alert("User not available!")
