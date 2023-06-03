@@ -2,7 +2,7 @@ import {
     View,
     Text,
 } from 'react-native'
-import {icons} from '../../constant'
+import {icons,routes} from '../../constant'
 import {
     UIIcon,
 } from '../../components'
@@ -18,7 +18,7 @@ function FindItem(props)
     }
 
     const Add=()=>{
-        axios.post('http://192.168.1.5:3000/addtracking',track)
+        axios.post(routes.addtracking,track)
         .then(res=>{
             console.log(res.data)
             if(res.data.code=="ER_DUP_ENTRY"){

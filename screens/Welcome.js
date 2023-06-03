@@ -12,6 +12,7 @@ function Welcome(props)
     const {navigation,route}=props
     //function of navigate to/back
     const {navigate,goBack}=navigation
+
     return (
         <View style={{flex:1}}>
             <ImageBackground 

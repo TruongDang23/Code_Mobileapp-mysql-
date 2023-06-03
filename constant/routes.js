@@ -5,4 +5,6 @@ export default{
     estimate:'http://192.168.1.6:3000/estimate',
     find:'http://192.168.1.6:3000/find',
     mornitor:'http://192.168.1.6:3000/mornitor',
+    addtracking:'http://192.168.1.6:3000/addtracking',
+    count:'http://192.168.1.6:3000/count',
 }

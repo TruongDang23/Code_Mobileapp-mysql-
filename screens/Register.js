@@ -19,6 +19,7 @@ function Register(props)
         Username:'',
         Email:'',
         Pass:'',
+        ID:'',
     })
 
     const Handle=()=>{
@@ -36,6 +37,13 @@ function Register(props)
         .catch(err=>console.log(err))
     }
 
+    const CountMember=()=>{
+        axios.post(routes.count)
+        .then(res=>{setValues((prev)=>({...prev,ID:res.data[0].Count}))})
+        .catch(err=>console.log(err))
+    }
+
+    CountMember()
     return (
         <View style={{flex:1}}>
             <ImageBackground 
