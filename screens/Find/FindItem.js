@@ -20,14 +20,12 @@ function FindItem(props)
     const Add=()=>{
         axios.post(routes.addtracking,track)
         .then(res=>{
-            console.log(res.data)
             if(res.data.code=="ER_DUP_ENTRY"){
                 alert("Patient exist")
             }
             else{
                 alert("Add Successfully")
             }
-            
         })
         .catch(err=>{console.log(err)})
     }

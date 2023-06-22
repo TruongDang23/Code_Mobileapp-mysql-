@@ -69,6 +69,7 @@ function Home({navigation,route})
                             {data.map(eachHuman => <HumanItem 
                                                         human={eachHuman}
                                                         key={eachHuman.id}
+                                                        keyUser={key}
                                                         onPress={()=>{
                                                             navigation.navigate('Estimate',{name:eachHuman.name,id:eachHuman.id}),
                                                             navigation.navigate('Mornitor',{name:eachHuman.name,id:eachHuman.id})

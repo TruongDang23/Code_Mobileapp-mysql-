@@ -6,4 +6,5 @@ export default{
     find:require('../assets/glass.png'),
     add:require('../assets/plus.png'),
     logout:require('../assets/logout.png'),
+    subtract: require('../assets/subtract.png'),
 }
