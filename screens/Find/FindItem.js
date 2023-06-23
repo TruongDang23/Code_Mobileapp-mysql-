@@ -38,7 +38,7 @@ function FindItem(props)
                 flexDirection: 'row',
                 marginBottom: 10,
             }}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 0.95,marginLeft:15 }}>
                     <Text style={{
                         fontSize: 20,
                         fontWeight: 'bold',

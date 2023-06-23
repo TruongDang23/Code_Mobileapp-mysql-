@@ -19,7 +19,7 @@ function Find({navigation,route})
     const [data,setDatas]=useState([])
     const [text,setText] = useState('')
 
-    var findID={ID:text}
+    var findID={Name:text}
 
     const Find=()=>{
         axios.post(routes.find,findID)
@@ -58,7 +58,7 @@ function Find({navigation,route})
                         <TextBox 
                         onChangeText={(text) => setText(text)}
                         value={text}
-                        placeholder="ID: 0000"/>
+                        placeholder="Name: Enter target name"/>
 
                         <UIIcon 
                         thisIcon={icons.find}
